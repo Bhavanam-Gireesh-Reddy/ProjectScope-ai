@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     kaggle_key: Optional[str] = None
     
     elasticsearch_host: str = "http://localhost:9200"
+    elasticsearch_user: Optional[str] = None
+    elasticsearch_password: Optional[str] = None
     
     neo4j_uri: str = "bolt://localhost:7687"
     neo4j_user: str = "neo4j"
@@ -20,6 +22,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-        extra = "ignore"  # Ignore extra env vars like FRONTEND_URL
+        extra = "ignore"
+        case_sensitive = False
 
 settings = Settings()
