@@ -3,7 +3,7 @@ services:
     name: projectscope-backend
     runtime: docker
     dockerContext: ./backend
-    dockerfile: Dockerfile
+    dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
       - key: PORT
