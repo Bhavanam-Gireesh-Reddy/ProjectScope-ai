@@ -44,7 +44,7 @@ export default function ResultTabs({ data }) {
 
       <div className="mt-6">
         {activeTab === 'repos' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {data.repositories.map(repo => <RepoCard key={repo.id} repo={repo} />)}
             {data.repositories.length === 0 && (
               <p className="text-slate-400 col-span-full text-center py-10">No repositories found.</p>
@@ -53,7 +53,7 @@ export default function ResultTabs({ data }) {
         )}
 
         {activeTab === 'papers' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {data.papers.map(paper => <PaperCard key={paper.id} paper={paper} />)}
             {data.papers.length === 0 && (
               <p className="text-slate-400 col-span-full text-center py-10">No research papers found.</p>
@@ -62,7 +62,7 @@ export default function ResultTabs({ data }) {
         )}
 
         {activeTab === 'datasets' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {(data.datasets || []).map(dataset => <DatasetCard key={dataset.id} dataset={dataset} />)}
             {(!data.datasets || data.datasets.length === 0) && (
               <p className="text-slate-400 col-span-full text-center py-10">No datasets found.</p>
@@ -96,19 +96,24 @@ export default function ResultTabs({ data }) {
         )}
 
         {activeTab === 'roadmap' && (
-          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 sm:p-8">
             <h3 className="text-xl font-semibold mb-8 flex items-center gap-3 text-primary">
               <Map className="h-6 w-6" />
               Suggested Execution Roadmap
             </h3>
-            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-4 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+            
+            {/* Roadmap Timeline / List */}
+            <div className="relative space-y-8 before:absolute before:inset-0 before:ml-4 sm:before:ml-6 md:before:mx-auto before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
               {data.roadmap.map((step, idx) => (
-                <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full border-4 border-slate-800 bg-primary text-slate-900 font-bold text-sm shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                <div key={idx} className="relative flex items-start md:items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                  {/* Step Number Dot */}
+                  <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 border-slate-800 bg-primary text-slate-900 font-bold text-sm sm:text-base shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
                     {idx + 1}
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 backdrop-blur-sm p-6 rounded-xl border border-slate-700/50 shadow-sm relative group-hover:border-primary/50 transition-colors">
-                    <p className="text-slate-300 leading-relaxed">{step}</p>
+                  
+                  {/* Step Content Card */}
+                  <div className="ml-6 sm:ml-10 md:ml-0 w-full md:w-[calc(50%-2.5rem)] bg-slate-900/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-slate-700/50 shadow-sm relative group-hover:border-primary/50 transition-all">
+                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">{step}</p>
                   </div>
                 </div>
               ))}
