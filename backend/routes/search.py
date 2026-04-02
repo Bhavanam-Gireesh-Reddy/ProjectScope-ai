@@ -43,6 +43,11 @@ async def search(request: SearchRequest):
     live_datasets = dedup_nodes(datasets_1, datasets_2)
     live_papers = fetch_arxiv_papers(expanded_query, limit=15)
     
+    # Fallback if expanded query returned nothing
+    if not live_papers and expanded_query != request.query:
+        print(f"ArXiv: Expanded query '{expanded_query}' failed. Falling back to original: '{request.query}'")
+        live_papers = fetch_arxiv_papers(request.query, limit=10)
+    
     # Optional: Index newly found records into Elasticsearch
     for repo in live_repos:
         indexing_service.index_document(repo["id"], "repo", repo)
